@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
 export const Article = sequelize.define(
-  "Article", {
+  "ArticleModel", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

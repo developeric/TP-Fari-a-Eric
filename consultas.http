@@ -1,0 +1,11 @@
+####
+POST http://localhost:4000/api/user
+Content-Type: application/json
+
+{
+    "id":1,
+    "username":"eric",
+    "email":"patinetakiller564@gmail.com",
+    "password":"123123123",
+    "role":"user"
+}
