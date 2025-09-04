@@ -28,6 +28,9 @@ export const Profile = sequelize.define("Profile", {
   },
 });
 
-Profile.belongsTo(User, { foreignKey: "user_id", onDelete: "CASCADE" });
+Profile.belongsTo(User, 
+  { foreignKey: "user_id",
+  as:"user"});
 
-User.hasOne(Profile, { foreignKey: "user_id" });
+User.hasOne(Profile, { foreignKey: "user_id",
+  as:"profile"},);

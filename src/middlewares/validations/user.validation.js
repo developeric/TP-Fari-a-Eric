@@ -1,6 +1,5 @@
 import { body, param } from "express-validator";
 import { User } from "../../models/user.model.js";
-import { Article } from "../../models/article.model.js";
 
 export const createUserValidator = [
   body("username")
@@ -15,7 +14,7 @@ export const createUserValidator = [
     .isString()
     .withMessage("Tiene que ser un STRING")
     .isLength({ min: 3, max: 20 })
-    .withMessage("Tiene que tener entre3-20 Caracteres"),
+    .withMessage("Tiene que tener entre 3-20 Caracteres"),
 
   body("email")
     .custom(async () => {
@@ -40,4 +39,5 @@ export const createUserValidator = [
     .withMessage("Tiene un limite de 255 Caracteres"),
 ];
 
-User.hasOne(Article)
+
+
