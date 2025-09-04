@@ -17,7 +17,7 @@ export const startDB = async () => {
   try {
     await sequelize.authenticate(),
       console.log("Se pudo autenticar con la Data Base");
-    await sequelize.sync();
+    await sequelize.sync({alter:true});
   } catch (error) {
     Message: "Error al autenticar con la Data Base";
   }
