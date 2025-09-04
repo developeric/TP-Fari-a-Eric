@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 import { Article } from "./article.model.js";
+import { Profile } from "./profile.model.js";
+
 
 
 export const User = sequelize.define(
@@ -33,6 +35,19 @@ export const User = sequelize.define(
 );
 
 
-User.hasOne(Article, { foreignKey: "user_id" });
 
-Article.belongsTo(User, { foreignKey: "user_id" });
+Article.belongsTo(User, {
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+});
+
+User.hasMany(Article, { 
+  foreignKey: "user_id" });
+
+//
+Profile.belongsTo(User, 
+  { foreignKey: "user_id",
+  as:"user"});
+
+User.hasOne(Profile, { foreignKey: "user_id",
+  as:"profile"},);

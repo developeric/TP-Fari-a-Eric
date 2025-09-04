@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { User } from "./user.model.js";
 
-export const Article = sequelize.define("Article", {
+export const Article = sequelize.define(
+  "Article", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -22,10 +22,5 @@ export const Article = sequelize.define("Article", {
     type: DataTypes.ENUM(`published`, `archived`),
     defaultValue: "published",
   },
+  
 });
-
-Article.belongsTo(User, { 
-  foreignKey: "user_id", 
-  onDelete: "CASCADE" });
-
-User.hasMany(Article, { foreignKey: "user_id" });
