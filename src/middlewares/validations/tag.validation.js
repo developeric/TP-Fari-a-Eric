@@ -2,7 +2,7 @@ import { body, param } from "express-validator";
 
 export const createTagvalidator = [
   body("name")
-    .custom(async () => {
+    .custom(async (value) => {
       const existente = await User.findOne({ where: { name: value } });
       if (existente) {
         throw new Error("Ya existe un User con este Nombre");

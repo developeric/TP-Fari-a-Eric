@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { createArticleTag } from "../controllers/articleTag.controllers.js";
 import { createArticleValidator } from "../middlewares/validations/article.validation.js";
-import { controllers } from "../middlewares/validations/validator.js";
+import { controllers } from "../middlewares/validator.js";
+
 
 export const routerArticleTag =  Router();
 

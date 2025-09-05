@@ -7,7 +7,6 @@ import { User } from "../models/user.model.js";
 
 
 export const createUser = async (req, res) => {
-    const { id, username,email, password, role } = req.body;
 
   try {
     const user = await User.create(req.body);

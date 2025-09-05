@@ -3,7 +3,7 @@ import bcrypt from "bcrypt"
 //hashea
 export const hashPassword = async (password) =>{
     const saltRounds = 10
-    return await bcrypt.hashPassword(password,saltRounds)
+    return await bcrypt.hash(password,saltRounds)
 };
 
 //verifica la contraseña
