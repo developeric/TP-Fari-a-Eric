@@ -26,8 +26,3 @@ Tag.belongsToMany(Article, {
   foreignKey: "tag_id",
   as: "article",
 });
-
-
-// article
-//             ArticleTag
-// tag

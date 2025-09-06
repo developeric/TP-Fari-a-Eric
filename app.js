@@ -21,7 +21,7 @@ app.use("/api", routerProfile);
 app.use("/api", routerTag);
 app.use("/api", routerUser);
 
-startDB().then(async() => {
+startDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Ejecutando en http://localhost:${PORT}`);
   });

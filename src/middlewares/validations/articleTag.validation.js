@@ -17,7 +17,18 @@ export const articleTagValidator = [
     }),
 ];
 
-// article 1(id)
-//   Article tag(intermedio)
-// tag 1(id)
-export const updateArticleTagValidator = [];
+export const updateArticleTagValidator = [
+    body("article_id")
+    .optional()
+    .isInt()
+    .withMessage("Tiene que ser un número entero")
+    .notEmpty()
+    .withMessage("No puede estar vacío este campo")
+    .custom(async (value) => {
+      const existente = await Article.findByPk(value);
+      if (!existente) {
+        throw new Error("Ese Articulo NO existe");
+      }
+      return true;
+    }),
+];
