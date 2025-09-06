@@ -1,4 +1,5 @@
 import { body, param } from "express-validator";
+import { Profile } from "../../models/profile.model.js";
 
 export const createProfileValidator = [
   body("first_name")
@@ -65,3 +66,22 @@ export const updateProfileValidator = [
 
   body("birth_date").optional().isDate().withMessage("Tiene que ser un DATE"),
 ];
+
+export const getProfileByPKValidator = [
+  param("id")
+    .isInt()
+    .withMessage("El valor tiene que ser un entero")
+    .custom(async (value) => {
+      const profile = await Profile.findByPk(value);
+      if (!profile) {
+        return res.status(404).json("No se ha podido encontrar");
+      }
+    }),
+];
+
+// export const deleteProfileValidator = [
+//   param("id").isInt().withMessage("El valor tiene que ser un entero")
+//   .custom(async (value)=>{
+
+//   })
+// ]

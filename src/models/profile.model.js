@@ -1,12 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { User } from "./user.model.js";
 
 export const Profile = sequelize.define("ProfileModel", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
   first_name: {
     type: DataTypes.STRING(50),
   },
@@ -26,3 +22,6 @@ export const Profile = sequelize.define("ProfileModel", {
     allowNull: true,
   },
 });
+
+Profile.belongsTo(User, { foreignKey: "user_id", as:"user" });
+User.hasOne(Profile, { foreignKey: "user_id", as:"profile" });

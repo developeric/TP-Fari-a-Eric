@@ -3,11 +3,6 @@ import { sequelize } from "../config/database.js";
 
 export const Article = sequelize.define(
   "ArticleModel", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
   title: {
     type: DataTypes.STRING(200),
   },

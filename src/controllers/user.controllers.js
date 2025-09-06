@@ -1,17 +1,7 @@
 import { where } from "sequelize";
 import { User } from "../models/user.model.js";
-//Create
-export const createUser = async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    if (user) {
-      return res.status(201).json(user);
-    }
-  } catch (error) {
-    res.status(500).json({ Message: "Internal Server Error en el CREATE" });
-    console.log(error);
-  }
-};
+
+
 
 //Update
 export const updateUser = async (req, res) => {
@@ -53,7 +43,7 @@ export const getUser = async (req, res) => {
 };
 
 //Delete
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req,res) => {
   try {
     const user = await User.destroy({ where: { id: req.params.id } });
     if (user) {

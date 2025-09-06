@@ -18,19 +18,19 @@ export const createUserValidator = [
     .withMessage("Tiene que tener entre3-20 Caracteres"),
 
   body("email")
-    .custom(async (value) => {
-      const existente = await User.findOne({ where: { email: value } });
-      if (existente) {
-        return res.status(400).json("Ya está registrado este Email");
-      }
-      return true;
-    })
     .isEmail()
     .withMessage("Tiene que ser un email Valido")
     .notEmpty()
     .withMessage("No puede estar vacío este campo")
     .isLength({ max: 100 })
-    .withMessage("Tiene un limite de 100 Caracteres"),
+    .withMessage("Tiene un limite de 100 Caracteres")
+    .custom(async (value) => {
+      const existente = await User.findOne({ where: { email: value } });
+      if (existente) {
+        throw new Error("Ya está registrado este Email");
+      }
+      return true;
+    }),
 
   body("password")
     .notEmpty()
@@ -112,11 +112,24 @@ export const updateUserValidator = [
 
 export const getUserByPKValidator = [
   param("id")
-  .isInt().withMessage("Tiene que ser un Entero")
-  .custom(async(value)=>{
-    const user = User.findByPk(value)
-    if(!user){
-      throw new Error ("El User no se ha podido encontrar")
-    }
-  })
-]
+    .isInt()
+    .withMessage("Tiene que ser un Entero")
+    .custom(async (value) => {
+      const user =await User.findByPk(value);
+      if (!user) {
+        throw new Error("El User no se ha podido encontrar");
+      }
+    }),
+];
+
+export const deleteUserValidator = [
+  param("id")
+    .isInt()
+    .withMessage("Tiene que ser un valor entero")
+    .custom(async (value) => {
+      const user =await User.destroy(value);
+      if (!user) {
+        throw new Error("No se ha podido encontrar");
+      }
+    }),
+];

@@ -5,7 +5,6 @@ import { ArticleTag } from "../models/articleTag.model.js";
 //Create
 export const createArticleTag = async (req, res) => {
   try {
-    const { id } = req.body;
     const articletag = await ArticleTag.create(req.body);
     if (articletag) {
       return res.status(201).json(articletag);

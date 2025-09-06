@@ -1,18 +1,10 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 import { Article } from "./article.model.js";
-import { Profile } from "./profile.model.js";
-
-
 
 export const User = sequelize.define(
   "UserModel",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     username: {
       type: DataTypes.STRING(20),
       unique: true,
@@ -34,20 +26,13 @@ export const User = sequelize.define(
   }
 );
 
-
+User.hasMany(Article, {
+  foreignKey: "user_id",
+  as: "articles",
+});
 
 Article.belongsTo(User, {
   foreignKey: "user_id",
+  as: "user",
   onDelete: "CASCADE",
 });
-
-User.hasMany(Article, { 
-  foreignKey: "user_id" });
-
-//
-Profile.belongsTo(User, 
-  { foreignKey: "user_id",
-  as:"user"});
-
-User.hasOne(Profile, { foreignKey: "user_id",
-  as:"profile"},);

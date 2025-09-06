@@ -1,12 +1,14 @@
 ####
-POST http://localhost:4000/api/user
+POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
     "username":"Eric",
     "email":"Eric@gmail.com",
     "password":"EricAndres123",
-    "role":"user"
+    "role":"user",
+    "first_name":"EricProfile",
+    "last_name":"FariñaProfile"
 }
 
 #### ARTICLE

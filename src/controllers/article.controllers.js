@@ -5,8 +5,6 @@ import { User } from "../models/user.model.js";
 //Create
 export const createArticle = async (req, res) => {
   try {
-    const { id, title, content, excerpt, status } = req.body;
-
     const article = await Article.create(req.body);
     if (article) {
       return res.status(201).json(article);
@@ -33,7 +31,6 @@ export const updateArticle = async (req, res) => {
 //GetbyPK
 export const getArticleByPK = async (req, res) => {
   try {
-    const { id, title, content, excerpt, status } = req.body;
     const articlebypk = await Article.findByPk({ id });
     if (articlebypk) {
       return res.status(200).json, articlebypk;
@@ -63,6 +60,9 @@ export const getArticle = async (req, res) => {
 export const deleteArticle = async (req, res) => {
   try {
     const article = await Article.destroy({ where: { id: req.params.id } });
+    if (article){
+      return res.status(200).json({Message: "Article Borrado Exitosamente"})
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Error Server en el Delete");

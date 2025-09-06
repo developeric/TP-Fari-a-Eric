@@ -1,6 +1,5 @@
 import { body, param } from "express-validator";
-import { ArticleTag } from "../../models/articleTag.model";
-import { Article } from "../../models/article.model";
+import { ArticleTag } from "../../models/articleTag.model.js";
 
 export const articleTagValidator = [
   body("article_id")
@@ -9,7 +8,7 @@ export const articleTagValidator = [
     .notEmpty()
     .withMessage("No puede estar vacío este campo")
     .custom(async (value) => {
-      const existente = await Article.findByPk(value);
+      const existente = await ArticleTag.findByPk(value);
       if (!existente) {
         throw new Error("Ese Articulo NO existe");
       }
@@ -25,7 +24,7 @@ export const updateArticleTagValidator = [
     .notEmpty()
     .withMessage("No puede estar vacío este campo")
     .custom(async (value) => {
-      const existente = await Article.findByPk(value);
+      const existente = await ArticleTag.findByPk(value);
       if (!existente) {
         throw new Error("Ese Articulo NO existe");
       }
