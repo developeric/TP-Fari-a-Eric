@@ -26,7 +26,7 @@ Content-Type: application/json
 
 
 #### ARTICLE
-DELETE  http://localhost:4000/api/article/1
+DELETE  http://localhost:4000/api/user/1
 Content-Type: application/json
 
 {

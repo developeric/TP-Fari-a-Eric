@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { User } from "./user.model.js";
 
 export const Article = sequelize.define(
   "ArticleModel", {
@@ -18,4 +19,15 @@ export const Article = sequelize.define(
     defaultValue: "published",
   },
   
+});
+
+User.hasMany(Article, {
+  foreignKey: "user_id",
+  as: "articles",
+});
+
+Article.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+  onDelete: "CASCADE",
 });

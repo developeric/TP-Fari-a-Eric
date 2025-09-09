@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { Article } from "./article.model.js";
+import { Profile } from "./profile.model.js";
 
 export const User = sequelize.define(
   "UserModel",
@@ -24,15 +24,7 @@ export const User = sequelize.define(
   {
     paranoid: true,
   }
-);
+)
 
-User.hasMany(Article, {
-  foreignKey: "user_id",
-  as: "articles",
-});
-
-Article.belongsTo(User, {
-  foreignKey: "user_id",
-  as: "user",
-  onDelete: "CASCADE",
-});
+Profile.belongsTo(User, { foreignKey: "user_id", as:"user" });
+User.hasOne(Profile, { foreignKey: "user_id", as:"profile" });
