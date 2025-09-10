@@ -1,10 +1,10 @@
+import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
+import { generateToken } from "../helpers/crearToken.js";
 import { Profile } from "../models/profile.model.js";
 import { User } from "../models/user.model.js";
-import { matchedData } from "express-validator";
-import { hashPassword } from "../helpers/bcrypt.helper.js";
 
-
-export const registerUser = async (req, res) => {
+//creamos una constante con todos los datos del usuario.
+export const Register = async (req, res) => {
   const {
     username,
     email,
@@ -15,55 +15,70 @@ export const registerUser = async (req, res) => {
     biography,
     avatar_url,
     birth_date,
-  } = matchedData(req);
+  } = req.body;
+
   try {
-    const hashedPassword = hashPassword(password);
-    const newUser = await User.create(
-      {
-        username,
-        email,
-        password: hashedPassword,
-        role,
-        profile: {
-          first_name,
-          last_name,
-          biography,
-          avatar_url,
-          birth_date,
-        },
-      },
-      {
-        include: { model: Profile, as: "profile" },
-      }
-    );
+    //la password nuestra se va a hashear
+    const passwordHasheada = await hashPassword(password);
 
-    const secureUser = {
-      username: newUser.username,
-      email: newUser.email,
-      role: newUser.role,
-      profile: newUser.profile,
-    };
+    //creamos un User
+    const newUser = await User.create({
+      username: username,
+      email: email,
+      password: passwordHasheada,
+      role: role,
+    });
 
-    res.status(201).json(secureUser);
+    //le asignamos un Profile
+    await Profile.create({
+      first_name: first_name,
+      last_name: last_name,
+      biography: biography,
+      avatar_url: avatar_url,
+      birth_date: birth_date,
+      user_id: newUser.id,
+    });
+
+    return res.status(201).json({ Message: "Usuario Creado Correctamente" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Error Server");
+    return res.status(500).json("Internal Error Server Register");
   }
 };
 
-//LOGIN
-export const Login = async(user)=>{
-  const {username}= req.body
-  const user = await User.findOne({
-    where: {username}
-  })
+//buscamos el user en la BD por su username
+export const Login = async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await User.findOne({
+      where: { username: username },
+      //incluímos su profile previamente asignado
+      include: [
+        {
+          model: Profile,
+          as: "profile",
+        },
+      ],
+    });
 
-}
-    //buscamos el User por su Username en la DB
+    //comparamos las password ingresada y la existente en la BD
+    const samePassword = await comparePassword(password, user.password);
 
-  //generar JWT
-  //declaramos token con los atributos del generateToken
+    if (!samePassword || !user) {
+      return res
+        .status(404)
+        .json({ Message: "Ha ingresado mal el User o la Password" });
+    }
+    //Se coloca un token para el user del Login
+    const token = generateToken(user);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60,
+    });
 
-  //envía el token
-
+    return res.status(200).json({ Message: "Logueado Correctamente" });
+  } catch (error) {
+    return res.status(500).json("Internal Server Error Login");
+  }
+};
