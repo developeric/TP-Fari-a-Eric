@@ -3,8 +3,9 @@ import { Tag } from "../models/tag.model.js";
 
 //Create
 export const createTag = async (req, res) => {
+  const {name} = req.body
   try {
-    const tag = await Tag.create(req.boy);
+    const tag = await Tag.create(req.body);
     if (tag) {
       return res.status(201).json(tag);
     }
@@ -16,6 +17,7 @@ export const createTag = async (req, res) => {
 
 //Update
 export const updateTag = async (req, res) => {
+    const {name} = req.body
   try {
     const tag = await Tag.update(req.body,{ where: { id: req.params.id } });
     if (tag) {
@@ -55,6 +57,7 @@ export const getTag = async (req, res) => {
 
 //Delete
 export const deleteTag = async (req, res) => {
+    const {name} = req.body
   try {
     const tag = await Tag.destroy({ where: { id: req.params.id } });
     if (tag) {

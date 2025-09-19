@@ -21,3 +21,5 @@ export const Profile = sequelize.define("ProfileModel", {
     allowNull: true,
   },
 })
+
+

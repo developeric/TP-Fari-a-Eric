@@ -24,10 +24,10 @@ export const Article = sequelize.define(
 User.hasMany(Article, {
   foreignKey: "user_id",
   as: "articles",
+    onDelete: "CASCADE",
 });
 
 Article.belongsTo(User, {
   foreignKey: "user_id",
-  as: "user",
-  onDelete: "CASCADE",
+  as: "user", 
 });

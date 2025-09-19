@@ -1,6 +1,6 @@
 //MW: verificar que sea un administrador
 
-export const authAdmin = async (req, res, next) => {
+export const authAdmin = (req, res, next) => {
   const user = req.userLogueado;
   if (user.role !== "admin") {
     return res.status(400).json({ msg: "Usted no tiene los permisos" });

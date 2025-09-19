@@ -1,7 +1,8 @@
 import { Profile } from "../models/profile.model.js";
-import { User, User } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
 import { generateToken } from "../helpers/jwt.helper.js";
+// import bcrypt from "bcrypt"
 
 //Register
 export const Register = async (req, res) => {
@@ -41,7 +42,7 @@ export const Register = async (req, res) => {
     //Creado Correctamente
     return res
       .status(201)
-      .json({ ok: true, msg: "Creado Correctamente", data: null });
+      .json({ ok: true, msg: "Creado Correctamente", data: user });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Internal Server Error" });
@@ -52,7 +53,8 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = User.findOne({ where: { username: username } });
+    const user = await User.findOne({ where: { username: username }, include:[{model:Profile, as: "profile"}] });
+
     if (!user) {
       return res
         .status(404)
@@ -84,3 +86,32 @@ export const Logout = async (req, res) => {
   res.clearCookie("token");
   return res.json({ msg: "Logout Exítoso" });
 };
+
+export const profile = (req, res) => {
+  const user = req.userLogueado;
+  console.log(user)
+  try {
+    return res.json({
+      user: {
+        id: user.id,
+        first_name: user.profile.first_name,
+        last_name: user.profile.last_name,
+      },
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "No tiene los permisos" });
+  }
+};
+
+// MODELO DE PRUEBA
+
+// {
+// 	"username":"Eric",
+// 	"email":"eric1@gmail.com",
+// 	"password":"EricAndres123",
+// 	"first_name":"FirstName1",
+// 	"last_name":"LastName1",
+// 	"biography":"Bio123",
+// 	"avatar_url":"http://localhost:4000",
+// 	"birth_date":"2007-02-18"
+// }
