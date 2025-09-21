@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { createArticleTag, deleteArticleTag, getArticleTag, getArticleTagByPK, updateArticleTag } from "../controllers/articleTag.controllers.js";
 import { aplicarValidaciones } from "../middlewares/validator.js";
-import { articleTagValidator } from "../middlewares/validations/articleTag.validation.js";
+import {createArticleTagValidator, deleteArticleTagValidator, updateArticleTagValidator } from "../middlewares/validations/articleTag.validation.js";
+import { getArticleByPKValidator } from "../middlewares/validations/article.validation.js";
 
 
 export const routerArticleTag =  Router();
+routerArticleTag.use(aplicarValidaciones)
 
-routerArticleTag.post("/articletag",createArticleTag)
-routerArticleTag.put("/article/:id",updateArticleTag)
+routerArticleTag.post("/articletag",createArticleTagValidator,createArticleTag)
+routerArticleTag.put("/article/:id",updateArticleTagValidator,updateArticleTag)
 routerArticleTag.get("/article",getArticleTag)
-routerArticleTag.get("/article/:id",getArticleTagByPK)
-routerArticleTag.delete("/article/:id",deleteArticleTag)
+routerArticleTag.get("/article/:id",getArticleByPKValidator,getArticleTagByPK)
+routerArticleTag.delete("/article/:id",deleteArticleTagValidator,deleteArticleTag)

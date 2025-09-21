@@ -1,4 +1,5 @@
 import { body, param } from "express-validator";
+import { Article } from "../../models/article.model.js";
 
 export const createArticleValidator = [
   body("title")
@@ -51,3 +52,29 @@ export const updateArticleValidator = [
     .notEmpty()
     .withMessage("Este campo no puede estar vacio"),
 ]
+
+
+export const getArticleByPKValidator = [
+  param("id")
+    .isInt()
+    .withMessage("El valor tiene que ser un entero")
+    .custom(async (value) => {
+      const profile = await Article.findByPk(value);
+      if (!profile) {
+        return res.status(404).json("No se ha podido encontrar");
+      }
+    }),
+];
+
+
+export const deleteArticleValidator = [
+  param("id")
+    .isInt()
+    .withMessage("Tiene que ser un valor entero")
+    .custom(async (value) => {
+      const tag = await Article.destroy(value);
+      if (!tag) {
+        return res.status(404).json("No se ha podido encontrar");
+      }
+    }),
+];

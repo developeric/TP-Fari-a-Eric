@@ -13,12 +13,13 @@ export const Register = async (req, res) => {
     role,
     first_name,
     last_name,
+    avatar_url,
     biography,
     birth_date,
   } = req.body;
   try {
     const hashedpassword = await hashPassword(password);
-
+    console.log(user);
     const user = await User.create({
       username,
       email,
@@ -30,9 +31,11 @@ export const Register = async (req, res) => {
       first_name,
       last_name,
       biography,
+      avatar_url,
       birth_date,
       user_id: user.id,
     });
+
     //Si se ha ingresado mal algun dato
     if (!user) {
       return res
@@ -53,7 +56,10 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({ where: { username: username }, include:[{model:Profile, as: "profile"}] });
+    const user = await User.findOne({
+      where: { username: username },
+      include: [{ model: Profile, as: "profile" }],
+    });
 
     if (!user) {
       return res
@@ -89,7 +95,7 @@ export const Logout = async (req, res) => {
 
 export const profile = (req, res) => {
   const user = req.userLogueado;
-  console.log(user)
+  console.log(user);
   try {
     return res.json({
       user: {

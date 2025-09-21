@@ -3,12 +3,17 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-    "username":"Eric",
-    "email":"Eric@gmail.com",
-    "password":"EricAndres123",
-    "role":"user",
-    "first_name":"EricProfile",
-    "last_name":"FariñaProfile"
+{
+	"username":"Eric",
+	"email":"ericfarina@gmail.com",
+	"password":"EricFari564",
+	"role":"admin",
+	"first_name":"First Name",
+	"last_name":"Last Name",
+	"biography":"A biography",
+	"avatar_url":"aaa",
+	"birth_date":"2007-02-18"
+}
 }
 
 #### ARTICLE
