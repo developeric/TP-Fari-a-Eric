@@ -11,9 +11,10 @@ export const Owner = async (req, res, next) => {
 
   if (!article) {
     return res
-      .status(400)
+      .status(403)
       .json({ msg: "Usted no es el dueño de este Articulo" });
   }
+  next()
 };
 
 export const OwnerOrAdmin = async (req, res, next) => {
@@ -27,9 +28,8 @@ export const OwnerOrAdmin = async (req, res, next) => {
       where: { id: req.params.id, user_id: user.id },
     });
     if (!article) {
-      return res.status(400).json({ msg: "Usted no tiene los permisos" });
+      return res.status(403).json({ msg: "Usted no tiene los permisos" });
     }
-
     next();
   } catch (error) {
     return res.status(400).json({ msg: "Algo ha salido mal" });

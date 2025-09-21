@@ -17,8 +17,10 @@ export const Article = sequelize.define(
   status: {
     type: DataTypes.ENUM(`published`, `archived`),
     defaultValue: "published",
-  },
+  }
   
+},{
+  paranoid:true
 });
 
 User.hasMany(Article, {

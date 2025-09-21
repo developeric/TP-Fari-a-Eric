@@ -48,7 +48,7 @@ export const getArticleTag = async (req, res) => {
   try {
     const articletag = await ArticleTag.findAll();
     if (articletag) {
-      return res.status(200).json, articletag;
+      return res.status(200).json(articletag);
     }
   } catch (error) {
     console.log(error);

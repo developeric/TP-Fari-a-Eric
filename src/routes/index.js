@@ -9,9 +9,9 @@ import { routerUser } from "./user.routes.js";
 export const Allroutes = Router();
 
 //Routes
+Allroutes.use(routerAuth);
 Allroutes.use(routerArticle);
 Allroutes.use(routerArticleTag);
 Allroutes.use(routerTag);
-Allroutes.use(routerAuth);
 Allroutes.use(routerProfile);
-Allroutes.use(routerUser);
+Allroutes.use(routerUser)

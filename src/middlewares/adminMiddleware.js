@@ -3,7 +3,7 @@
 export const authAdmin = (req, res, next) => {
   const user = req.userLogueado;
   if (user.role !== "admin") {
-    return res.status(400).json({ msg: "Usted no tiene los permisos" });
+    return res.status(403).json({ msg: "Usted no tiene los permisos" });
   }
   next();
 };

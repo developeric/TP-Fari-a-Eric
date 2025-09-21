@@ -19,7 +19,6 @@ export const Register = async (req, res) => {
   } = req.body;
   try {
     const hashedpassword = await hashPassword(password);
-    console.log(user);
     const user = await User.create({
       username,
       email,
@@ -83,7 +82,7 @@ export const Login = async (req, res) => {
     return res.status(200).json({ ok: true, msg: "Logueado Correctamente" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ msg: "Internal Server Error" });
+    return res.status(400).json({ msg: "No Se pudo Loguear" });
   }
 };
 
