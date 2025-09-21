@@ -83,9 +83,8 @@ export const getTag = async (req, res) => {
 //Delete
 export const deleteTag = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
   try {
-    const tag = await Tag.destroy({ where: { id: req.params.id } });
+    const tag = await Tag.destroy({ where: { id} });
     if (!tag) {
       return res.status(400).json({ Message: "No se pudo borrar", data: null });
     }

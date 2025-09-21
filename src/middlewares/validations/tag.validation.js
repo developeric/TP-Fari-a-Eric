@@ -43,6 +43,7 @@ export const getTagByPKValidator = [
       if (!tag) {
         return res.status(404).json("No se ha podido encontrar");
       }
+      return true
     }),
 ];
 
@@ -51,9 +52,10 @@ export const deleteTagValidator = [
     .isInt()
     .withMessage("Tiene que ser un valor entero")
     .custom(async (value) => {
-      const tag = await Tag.destroy(value);
+      const tag = await Tag.findByPk(value);
       if (!tag) {
         return res.status(404).json("No se ha podido encontrar");
       }
+      return true
     }),
 ];

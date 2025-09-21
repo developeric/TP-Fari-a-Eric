@@ -16,9 +16,9 @@ export const routerUser = Router();
 
 
 routerUser.get("/user", authMiddleware, authAdmin, getUser);
-routerUser.get("/user/:id", authMiddleware, authAdmin, UserWithAll);
+routerUser.get("/users/:id", authMiddleware, authAdmin, UserWithAll);
 routerUser.put(
-  "/user/id",
+  "/user",
   authMiddleware,
   authAdmin,
   updateUserValidator,

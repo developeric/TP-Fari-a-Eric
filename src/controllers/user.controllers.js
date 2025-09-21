@@ -4,12 +4,16 @@ import { Profile } from "../models/profile.model.js";
 
 //Update
 export const updateUser = async (req, res) => {
+  const {id} = req.userLogueado
   try {
-    const user = await User.update(req.body, { where: { id: req.params.id } });
-    if (user) {
-      return res.status(200).json, user;
+    const [updated]= await User.update(req.body, { where: { id } });
+    if (!updated) {
+      return res.status(400).json({msg:"No se ha Actualizado"});
     }
+  return res.status(200).json({msg:`Se han actualizado: ${updated} columnas`});
   } catch (error) {
+
+  
     console.log(error);
     return res.status(500).json("Internal Error Server");
   }
@@ -33,7 +37,7 @@ export const getUser = async (req, res) => {
   try {
     const user = await User.findAll();
     if (user) {
-      return res.status(200).json, user;
+      return res.status(200).json(user);
     }
   } catch (error) {
     console.log(error);
