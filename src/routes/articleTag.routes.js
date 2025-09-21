@@ -9,5 +9,5 @@ import { Owner } from "../middlewares/ownerMiddleware.js";
 export const routerArticleTag =  Router();
 routerArticleTag.use(aplicarValidaciones)
 
-routerArticleTag.post("/article-tags",authMiddleware,Owner,createArticleTagValidator,createArticleTag)
+routerArticleTag.post("/article-tags/",authMiddleware,Owner,createArticleTagValidator,createArticleTag) //crea las relaciones
 routerArticleTag.delete("/article-tags/:articleTagId",authMiddleware,Owner,deleteArticleTagValidator,deleteArticleTag)

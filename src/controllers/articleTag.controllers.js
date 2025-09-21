@@ -33,7 +33,7 @@ export const updateArticleTag = async (req, res) => {
 //GetByPK
 export const getArticleTagByPK = async (req, res) => {
   try {
-    const articletag = await ArticleTag.findByPk({ id });
+    const articletag = await ArticleTag.findByPk( id );
     if (articletag) {
       return res.status(200).json, articletag;
     }
@@ -58,9 +58,10 @@ export const getArticleTag = async (req, res) => {
 
 //Delete
 export const deleteArticleTag = async (req, res) => {
+  const {articleTagId} = req.params
   try {
     const articletag = await ArticleTag.destroy({
-      where: { id: req.params.id },
+      where: { id: articleTagId },
     });
 
     if (articletag) {

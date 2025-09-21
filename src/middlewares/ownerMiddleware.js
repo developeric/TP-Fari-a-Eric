@@ -6,7 +6,7 @@ export const Owner = async (req, res, next) => {
   //article debe coincidir con el id que nosotros le demos
   //article debe pertenecer al id del req.userLogueado
   const article = await Article.findOne({
-    where: { id: req.params.id, user_id: user.id },
+    where: { id: user.id, user_id: user.id },
   });
 
   if (!article) {
